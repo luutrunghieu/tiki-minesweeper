@@ -6,8 +6,8 @@ export default class Game extends Vue {
   options: Option[] = [
     {
       level: 'Beginner',
-      dimension: 2,
-      mine: 1
+      dimension: 9,
+      mine: 10
     },
     {
       level: 'Advanced',
@@ -147,12 +147,20 @@ export default class Game extends Vue {
       this.firstClicked = true;
       this.countTimeInterval = setInterval(() => this.countTime(), 1000);
     }
+
     const newArr = [...this.clickedMatrix[rowIndex - 1]];
     newArr[colIndex - 1] = 1;
     this.clickedMatrix[rowIndex - 1] = newArr;
     this.clickedMatrix = [...this.clickedMatrix];
 
     if (this.pattern[rowIndex - 1][colIndex - 1] === 'bomb') {
+      for (let rowIdx = 0; rowIdx < this.selectedLevel.dimension; rowIdx++) {
+        for (let colIdx = 0; colIdx < this.selectedLevel.dimension; colIdx++) {
+          if (this.pattern[rowIdx][colIdx] === 'bomb') {
+            this.clickedMatrix[rowIdx][colIdx] = 1;
+          }
+        }
+      }
       this.$buefy.dialog.confirm({
         message: `you lose in ${this.hours}:${this.minutes}:${this.seconds}`,
         cancelText: 'Go Home',
