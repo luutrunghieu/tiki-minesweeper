@@ -1,5 +1,5 @@
 export interface Option {
-  level: string
-  dimension: number
-  mine: number
+  level: string;
+  dimension: number;
+  mine: number;
 }
