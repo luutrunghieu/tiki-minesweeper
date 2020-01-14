@@ -1,6 +1,7 @@
 <template>
   <div class="game" v-if="selectedLevel">
     <h1 class="is-size-1">Game On</h1>
+    <h1 class="is-size-3">Time: {{ hours }}: {{ minutes }}: {{ seconds }}</h1>
     <template v-for="rowIndex in selectedLevel.dimension">
       <div :key="rowIndex" class="row">
         <template v-for="colIndex in selectedLevel.dimension">
@@ -35,7 +36,7 @@
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
         0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       &.clicked {
-        background: rgba(0,0,0,.1);
+        background: rgba(0, 0, 0, 0.1);
         box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
           0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       }
