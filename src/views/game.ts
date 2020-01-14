@@ -23,6 +23,7 @@ export default class Game extends Vue {
   };
 
   pattern: any[] = [];
+  clickedMatrix: any[] = [];
 
   mounted() {
     const foundOption = this.options.find(option => option.level === this.$route.query.level);
@@ -31,6 +32,10 @@ export default class Game extends Vue {
   }
 
   initPattern() {
+    this.clickedMatrix = Array.from(Array(this.selectedLevel.dimension), _ =>
+      Array(this.selectedLevel.dimension).fill(0)
+    );
+
     this.pattern = Array.from(Array(this.selectedLevel.dimension), _ =>
       Array(this.selectedLevel.dimension).fill(0)
     );
@@ -49,7 +54,9 @@ export default class Game extends Vue {
 
     for (let rowIdx = 0; rowIdx < dimension; rowIdx++) {
       for (let colIdx = 0; colIdx < dimension; colIdx++) {
-        if (this.pattern[rowIdx][colIdx] === 'bomb') { continue; }
+        if (this.pattern[rowIdx][colIdx] === 'bomb') {
+          continue;
+        }
 
         let bombArround = 0;
         if (rowIdx > 0 && colIdx > 0) {
@@ -110,6 +117,17 @@ export default class Game extends Vue {
 
         this.pattern[rowIdx][colIdx] = bombArround;
       }
+    }
+  }
+
+  clickBtn(rowIndex: number, colIndex: number) {
+    const newArr = [...this.clickedMatrix[rowIndex - 1]];
+    newArr[colIndex - 1] = 1;
+    this.clickedMatrix[rowIndex - 1] = newArr;
+    this.clickedMatrix = [...this.clickedMatrix];
+
+    if(this.pattern[rowIndex-1][colIndex-1] === 'bomb') {
+      alert('you lose')
     }
   }
 }
